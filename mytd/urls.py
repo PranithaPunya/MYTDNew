@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
-from users.views import UserViewSet
+from users.views import UserViewSet,UserLoginView
 from projects.views import (
     ProjectOverviewAPI, 
     ProjectDetailAPI, 
@@ -38,11 +38,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path("projects/", ProjectOverviewAPI.as_view(), name="project-overview"),
-    path(
-        "projects/<str:project_id>/",
-        ProjectDetailAPI.as_view(),
-        name="project-detail",
-    ),
+    path("projects/<str:project_id>/",ProjectDetailAPI.as_view(),name="project-detail"),
     #project documents
     path('projects/documents/add/', ProjectDocumentCreateView.as_view(), name='add-project-document'),
     #project KPI
@@ -51,4 +47,5 @@ urlpatterns = [
     #project FTE Summary
     path('projects/fte-summary/', ProjectFTESummaryView.as_view(), name='fte-summary-create'),
     path('projects/fte-summary/<int:pk>/', ProjectFTESummaryView.as_view(), name='fte-summary'),
+    path('login/', UserLoginView.as_view(), name='user-login'),
 ]
